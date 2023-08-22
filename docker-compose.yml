@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  todoapp.api:
+    container_name: "ToDoApp.Api"
+    image: ${DOCKER_REGISTRY-}todoappapi
+    build:
+      context: .
+      dockerfile: src/ToDoApp.Api/Dockerfile
+
+  mssqldb:
+    container_name: "MsSqlDB"
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
