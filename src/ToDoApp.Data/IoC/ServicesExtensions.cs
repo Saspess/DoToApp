@@ -19,7 +19,7 @@ namespace ToDoApp.Data.IoC
             services.ConfigureSqlContext(configuration)
                 .ConfigureDbContext()
                 .ConfigureIdentity()
-                .ConfigureAppIdentity()
+                .ConfigureAppIdentity(configuration)
                 .ConfigureRepositories();
 
             return services;
@@ -55,7 +55,7 @@ namespace ToDoApp.Data.IoC
             return services;
         }
 
-        public static IServiceCollection ConfigureAppIdentity(this IServiceCollection services)
+        public static IServiceCollection ConfigureAppIdentity(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication(auth =>
             {
@@ -67,9 +67,12 @@ namespace ToDoApp.Data.IoC
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
+                    ValidAudience = configuration["AuthSettings:Audience"],
+                    ValidIssuer = configuration["AuthSettings:Issuer"],
                     RequireExpirationTime = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Created by Nikolay Voitehovich")),
-                    ValidateIssuerSigningKey = true
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["AuthSettings:Key"])),
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true
                 };
             });
 
