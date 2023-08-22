@@ -1,6 +1,6 @@
 ﻿namespace ToDoApp.Data.Entities
 {
-    public class UserEntity : BaseEntity
+    public class AppUserEntity : BaseEntity
     {
         public string FirstName { get; set; } = null!;
 
