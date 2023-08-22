@@ -7,6 +7,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ToDoApp.Data.Contexts.Contracts;
 using ToDoApp.Data.Contexts.Implementation;
+using ToDoApp.Data.Repositories.Contracts;
+using ToDoApp.Data.Repositories.Implementation;
 
 namespace ToDoApp.Data.IoC
 {
@@ -17,7 +19,8 @@ namespace ToDoApp.Data.IoC
             services.ConfigureSqlContext(configuration)
                 .ConfigureDbContext()
                 .ConfigureIdentity()
-                .ConfigureAppIdentity();
+                .ConfigureAppIdentity()
+                .ConfigureRepositories();
 
             return services;
         }
@@ -69,6 +72,14 @@ namespace ToDoApp.Data.IoC
                     ValidateIssuerSigningKey = true
                 };
             });
+
+            return services;
+        }
+
+        public static IServiceCollection ConfigureRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IAppUserRepository, AppUserRepository>()
+                .AddScoped<ITaskRepository, TaskRepository>();
 
             return services;
         }
