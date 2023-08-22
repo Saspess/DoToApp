@@ -10,6 +10,8 @@
 
         public DateTime CreationDatetime { get; set; }
 
+        public int AppUserId { get; set; }
+
         public AppUserEntity AppUser { get; set; } = null!;
     }
 }

@@ -26,6 +26,9 @@ namespace ToDoApp.Data.Configurations
                 .HasColumnType("datetime2")
                 .HasPrecision(0)
                 .IsRequired();
+
+            builder.Property(t => t.AppUserId)
+                .IsRequired();
         }
     }
 }
