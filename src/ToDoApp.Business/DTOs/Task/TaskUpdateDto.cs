@@ -12,6 +12,6 @@
 
         public DateTime CreationDatetime { get; set; }
 
-        public string AppUserEmail { get; set; } = null!;
+        public int AppUserId { get; set; }
     }
 }
