@@ -1,3 +1,4 @@
+using ToDoApp.Business.IoC;
 using ToDoApp.Data.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,7 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.ConfigureDataLayer(builder.Configuration);
+builder.Services.ConfigureDataLayer(builder.Configuration)
+    .ConfigureBusinessLayer();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
