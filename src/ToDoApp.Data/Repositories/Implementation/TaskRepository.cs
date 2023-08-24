@@ -28,14 +28,14 @@ namespace ToDoApp.Data.Repositories.Implementation
             .Include(t => t.AppUser)
             .ToListAsync();
 
-        public async Task<IEnumerable<TaskEntity>> GetUserComplitedTasksAsync(int appUserId) =>
+        public async Task<IEnumerable<TaskEntity>> GetUserCompletedTasksAsync(int appUserId) =>
             await appContext.Set<TaskEntity>()
             .AsNoTracking()
             .Where(t => t.AppUserId == appUserId && t.IsCompleted == true)
             .Include(t => t.AppUser)
             .ToListAsync();
 
-        public async Task<IEnumerable<TaskEntity>> GetUserUncomplitedTasksAsync(int appUserId) =>
+        public async Task<IEnumerable<TaskEntity>> GetUserUncompletedTasksAsync(int appUserId) =>
             await appContext.Set<TaskEntity>()
             .AsNoTracking()
             .Where(t => t.AppUserId == appUserId && t.IsCompleted == false)

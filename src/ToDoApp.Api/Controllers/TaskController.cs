@@ -46,18 +46,18 @@ namespace ToDoApp.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("UsersComplitedTesks/{appUserId:int}")]
-        public async Task<IActionResult> GetAppUserComplitedTasksAsync([FromRoute] int appUserId)
+        [HttpGet("UsersCompletedTesks/{appUserId:int}")]
+        public async Task<IActionResult> GetAppUserCompletedTasksAsync([FromRoute] int appUserId)
         {
-            var result = await _taskService.GetAppUserComplitedTasksAsync(appUserId);
+            var result = await _taskService.GetAppUserCompletedTasksAsync(appUserId);
 
             return Ok(result);
         }
 
-        [HttpGet("UsersUncomplitedTesks/{appUserId:int}")]
-        public async Task<IActionResult> GetAppUserUncomplitedTasksAsync([FromRoute] int appUserId)
+        [HttpGet("UsersUncompletedTesks/{appUserId:int}")]
+        public async Task<IActionResult> GetAppUserUncompletedTasksAsync([FromRoute] int appUserId)
         {
-            var result = await _taskService.GetAppUserUncomplitedTasksAsync(appUserId);
+            var result = await _taskService.GetAppUserUncompletedTasksAsync(appUserId);
 
             return Ok(result);
         }
