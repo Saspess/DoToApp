@@ -6,8 +6,8 @@ namespace ToDoApp.Business.Services.Contracts
     {
         Task<IEnumerable<TaskViewDto>> GetAllAsync();
         Task<IEnumerable<TaskViewDto>> GetByAppUserIdAsync(int appUserId);
-        Task<IEnumerable<TaskViewDto>> GetAppUserComplitedTasksAsync(int appUserId);
-        Task<IEnumerable<TaskViewDto>> GetAppUserUncomplitedTasksAsync(int appUserId);
+        Task<IEnumerable<TaskViewDto>> GetAppUserCompletedTasksAsync(int appUserId);
+        Task<IEnumerable<TaskViewDto>> GetAppUserUncompletedTasksAsync(int appUserId);
         Task<TaskViewDto> GetByIdAsync(int id);
         Task<TaskViewDto> CreateAsync(TaskCreateDto taskCreateDto);
         Task UpdateAsync(TaskUpdateDto taskUpdateDto);

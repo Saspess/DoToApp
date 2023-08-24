@@ -36,17 +36,17 @@ namespace ToDoApp.Business.Services.Implementation
             return taskViewDtos;
         }
 
-        public async Task<IEnumerable<TaskViewDto>> GetAppUserComplitedTasksAsync(int appUserId)
+        public async Task<IEnumerable<TaskViewDto>> GetAppUserCompletedTasksAsync(int appUserId)
         {
-            var taskEntities = await _taskRepository.GetUserComplitedTasksAsync(appUserId);
+            var taskEntities = await _taskRepository.GetUserCompletedTasksAsync(appUserId);
             var taskViewDtos = _mapper.Map<IEnumerable<TaskViewDto>>(taskEntities);
 
             return taskViewDtos;
         }
 
-        public async Task<IEnumerable<TaskViewDto>> GetAppUserUncomplitedTasksAsync(int appUserId)
+        public async Task<IEnumerable<TaskViewDto>> GetAppUserUncompletedTasksAsync(int appUserId)
         {
-            var taskEntities = await _taskRepository.GetUserUncomplitedTasksAsync(appUserId);
+            var taskEntities = await _taskRepository.GetUserUncompletedTasksAsync(appUserId);
             var taskViewDtos = _mapper.Map<IEnumerable<TaskViewDto>>(taskEntities);
 
             return taskViewDtos;

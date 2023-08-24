@@ -28,18 +28,31 @@ namespace ToDoApp.Data.Repositories.Implementation
             .Include(t => t.AppUser)
             .ToListAsync();
 
-        public async Task<IEnumerable<TaskEntity>> GetUserComplitedTasksAsync(int appUserId) =>
+        public async Task<IEnumerable<TaskEntity>> GetUserCompletedTasksAsync(int appUserId) =>
             await appContext.Set<TaskEntity>()
             .AsNoTracking()
             .Where(t => t.AppUserId == appUserId && t.IsCompleted == true)
             .Include(t => t.AppUser)
             .ToListAsync();
 
-        public async Task<IEnumerable<TaskEntity>> GetUserUncomplitedTasksAsync(int appUserId) =>
+        public async Task<IEnumerable<TaskEntity>> GetUserUncompletedTasksAsync(int appUserId) =>
             await appContext.Set<TaskEntity>()
             .AsNoTracking()
             .Where(t => t.AppUserId == appUserId && t.IsCompleted == false)
             .Include(t => t.AppUser)
             .ToListAsync();
+
+        public override async Task<TaskEntity?> CreateAsync(TaskEntity taskEntity)
+        {
+            var created = await appContext.Set<TaskEntity>().AddAsync(taskEntity);
+            await appContext.SaveChangesAsync();
+
+            var createdEntity = await appContext.Set<TaskEntity>()
+            .AsNoTracking()
+            .Include(t => t.AppUser)
+            .FirstOrDefaultAsync(t => t.Id == created.Entity.Id);
+
+            return createdEntity;
+        }
     }
 }
