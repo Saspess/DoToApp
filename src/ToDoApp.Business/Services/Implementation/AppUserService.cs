@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using ToDoApp.Business.DTOs.AppUser;
 using ToDoApp.Business.Exceptions;
 using ToDoApp.Business.Services.Contracts;
@@ -9,11 +10,14 @@ namespace ToDoApp.Business.Services.Implementation
 {
     public class AppUserService : IAppUserService
     {
+        private readonly UserManager<IdentityUser> _userManager;
+
         private readonly IAppUserRepository _appUserRepository;
         private readonly IMapper _mapper;
 
-        public AppUserService(IAppUserRepository appUserRepository, IMapper mapper)
+        public AppUserService(UserManager<IdentityUser> userManager, IAppUserRepository appUserRepository, IMapper mapper)
         {
+            _userManager = userManager;
             _appUserRepository = appUserRepository ?? throw new ArgumentNullException(nameof(appUserRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
@@ -65,6 +69,11 @@ namespace ToDoApp.Business.Services.Implementation
         {
             var existingAppUser = await _appUserRepository.GetByIdAsync(id)
                 ?? throw new NotFoundException("User was not found.");
+
+            var existingUser = await _userManager.FindByEmailAsync(existingAppUser.Email)
+                ?? throw new UserNotFoundException(existingAppUser.Email);
+
+            await _userManager.DeleteAsync(existingUser);
 
             await _appUserRepository.DeleteAsync(id);
         }

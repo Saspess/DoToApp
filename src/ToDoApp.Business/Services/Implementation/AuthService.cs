@@ -50,7 +50,7 @@ namespace ToDoApp.Business.Services.Implementation
             }
 
             var appUserEntity = _mapper.Map<AppUserEntity>(appUserRegisterDto);
-            var createdAppUserEntity = _appUserReopsitory.CreateAsync(appUserEntity);
+            var createdAppUserEntity = await _appUserReopsitory.CreateAsync(appUserEntity);
             var createdAppUserViewDto = _mapper.Map<AppUserViewDto>(createdAppUserEntity);
 
             return createdAppUserViewDto;
@@ -58,10 +58,10 @@ namespace ToDoApp.Business.Services.Implementation
 
         public async Task<string> LoginAsync(AppUserLoginDto appUserLoginDto)
         {
-            var existedUser = await _userManager.FindByEmailAsync(appUserLoginDto.Email)
+            var existingUser = await _userManager.FindByEmailAsync(appUserLoginDto.Email)
                 ?? throw new UserNotFoundException(appUserLoginDto.Email);
 
-            var loginResult = await _userManager.CheckPasswordAsync(existedUser, appUserLoginDto.Password);
+            var loginResult = await _userManager.CheckPasswordAsync(existingUser, appUserLoginDto.Password);
 
             if (!loginResult)
             {
@@ -71,7 +71,7 @@ namespace ToDoApp.Business.Services.Implementation
             var claims = new[]
             {
                 new Claim(ClaimTypes.Email, appUserLoginDto.Email),
-                new Claim(ClaimTypes.NameIdentifier, existedUser.Id)
+                new Claim(ClaimTypes.NameIdentifier, existingUser.Id)
             };
             
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["AuthSettings:Key"]));
