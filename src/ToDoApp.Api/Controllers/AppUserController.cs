@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ToDoApp.Business.DTOs.AppUser;
 using ToDoApp.Business.Services.Contracts;
 
@@ -6,6 +7,7 @@ namespace ToDoApp.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AppUserController : ControllerBase
     {
         private IAppUserService _appUserService;
