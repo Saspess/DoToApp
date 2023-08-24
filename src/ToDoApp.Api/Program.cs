@@ -1,3 +1,4 @@
+using ToDoApp.Api.Middleware;
 using ToDoApp.Business.IoC;
 using ToDoApp.Data.IoC;
 
@@ -15,6 +16,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
