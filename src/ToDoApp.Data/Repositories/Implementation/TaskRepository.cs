@@ -41,5 +41,18 @@ namespace ToDoApp.Data.Repositories.Implementation
             .Where(t => t.AppUserId == appUserId && t.IsCompleted == false)
             .Include(t => t.AppUser)
             .ToListAsync();
+
+        public override async Task<TaskEntity?> CreateAsync(TaskEntity taskEntity)
+        {
+            var created = await appContext.Set<TaskEntity>().AddAsync(taskEntity);
+            await appContext.SaveChangesAsync();
+
+            var createdEntity = await appContext.Set<TaskEntity>()
+            .AsNoTracking()
+            .Include(t => t.AppUser)
+            .FirstOrDefaultAsync(t => t.Id == created.Entity.Id);
+
+            return createdEntity;
+        }
     }
 }
